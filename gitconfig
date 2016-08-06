@@ -1,5 +1,6 @@
 [diff]
   tool = mvimdiff
+  submodule = log
 [difftool "mvimdiff"]
   cmd = /usr/local/bin/mvim -dv $LOCAL $REMOTE
   prompt = false
@@ -23,6 +24,6 @@
   lp = !git lg -p
   rt = rev-parse --show-toplevel
 [push]
-	default = simple
+  default = simple
 [status]
-	submodulesummary = 1
+  submodulesummary = 1
