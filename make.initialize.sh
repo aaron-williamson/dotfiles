@@ -13,7 +13,7 @@ function link_dotfile {
     echo ERROR: File $dest exists, did not create link
   else
     echo Creating link from $1 to $dest
-    #ln -s $1 $dest
+    ln -s $1 $dest
   fi
 }
 
@@ -41,4 +41,4 @@ echo
 
 # Set up vim
 echo Setting up vim
-#source vim/setup.sh
+source vim/setup.sh
