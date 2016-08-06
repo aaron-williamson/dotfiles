@@ -24,3 +24,5 @@
   rt = rev-parse --show-toplevel
 [push]
 	default = simple
+[status]
+	submodulesummary = 1
