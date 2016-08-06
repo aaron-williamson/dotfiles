@@ -1,0 +1,6 @@
+[submodule "zprezto"]
+	path = zprezto
+	url = git@github.com:aaron-williamson/prezto
+[submodule "vim"]
+	path = vim
+	url = git@github.com:aaron-williamson/vimdir

@@ -1,0 +1,26 @@
+[diff]
+  tool = mvimdiff
+[difftool "mvimdiff"]
+  cmd = /usr/local/bin/mvim -dv $LOCAL $REMOTE
+  prompt = false
+[merge]
+  tool = mvimdiff
+  conflictstyle = diff3
+[mergetool "mvimdiff"]
+  cmd = /usr/local/bin/mvim -dv $BASE $LOCAL $REMOTE $MERGED
+  prompt = false
+[alias]
+  dt = difftool
+  lg = log --graph --oneline
+  st = status
+  aa = add --all
+  amend = commit --amend
+  di = diff
+  dc = diff --cached
+  co = checkout
+  ci = commit --verbose
+  fa = fetch --all
+  lp = !git lg -p
+  rt = rev-parse --show-toplevel
+[push]
+	default = simple
