@@ -4,3 +4,6 @@
 [submodule "vim"]
 	path = vim
 	url = git@github.com:aaron-williamson/vimdir
+[submodule "base16-shell"]
+	path = base16-shell
+	url = git@github.com:aaron-williamson/base16-shell
