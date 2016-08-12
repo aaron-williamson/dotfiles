@@ -9,6 +9,7 @@
   conflictstyle = diff3
 [mergetool "mvimdiff"]
   cmd = /usr/local/bin/mvim -dv $BASE $LOCAL $REMOTE $MERGED
+[mergetool]
   prompt = false
 [alias]
   dt = difftool
