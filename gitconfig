@@ -24,6 +24,7 @@
   fa = fetch --all
   lp = !git lg -p
   rt = rev-parse --show-toplevel
+  sb = show-branch --list
 [push]
   default = simple
 [status]
