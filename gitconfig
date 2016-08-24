@@ -26,6 +26,6 @@
   rt = rev-parse --show-toplevel
   sb = show-branch --list
 [push]
-  default = simple
+  default = current
 [status]
   submodulesummary = 1
