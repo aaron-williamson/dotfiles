@@ -25,6 +25,10 @@
   lp = !git lg -p
   rt = rev-parse --show-toplevel
   sb = show-branch --list
+  sbr = ls-remote -h
+  lb = branch --list
+  lbr = branch -r --list
+  lba = branch -a
 [push]
   default = simple
 [status]
