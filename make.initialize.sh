@@ -10,7 +10,7 @@ cd $current_dir
 function link_dotfile {
   dest="${HOME}/.$(basename $1)"
   if [ -e $dest ]; then
-    echo ERROR: File $dest exists, did not create link
+    echo File $dest exists, did not create link
   else
     echo Creating link from $1 to $dest
     ln -s $1 $dest
