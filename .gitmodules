@@ -1,7 +1,6 @@
 [submodule "zprezto"]
 	path = zprezto
 	url = git@github.com:aaron-williamson/prezto
-	branch = master
 [submodule "vim"]
 	path = vim
 	url = git@github.com:aaron-williamson/vimdir
