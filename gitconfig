@@ -1,14 +1,11 @@
 [diff]
-  tool = mvimdiff
+  tool = vimdiff
   submodule = log
-[difftool "mvimdiff"]
-  cmd = /usr/local/bin/mvim -dv $LOCAL $REMOTE
+[difftool]
   prompt = false
 [merge]
-  tool = mvimdiff
+  tool = vimdiff
   conflictstyle = diff3
-[mergetool "mvimdiff"]
-  cmd = /usr/local/bin/mvim -dv $BASE $LOCAL $REMOTE $MERGED
 [mergetool]
   prompt = false
 [alias]
@@ -25,7 +22,7 @@
   lp = !git lg -p
   rt = rev-parse --show-toplevel
   sb = show-branch --list
-  sbr = ls-remote -h
+  sbr = ls-remote -h origin
   lb = branch --list
   lbr = branch -r --list
   lba = branch -a
