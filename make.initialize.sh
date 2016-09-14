@@ -4,6 +4,15 @@ set -e
 
 current_dir=$( cd "$( dirname ${BASH_SOURCE[0]} )" && pwd )
 
+# Array of dotfiles to link
+dotfiles="emacs.d
+          gemrc
+          gitconfig
+          irbrc
+          tmux.conf
+          vim
+          zprezto"
+
 # Ensure we're in the dotfiles directory
 cd $current_dir
 
@@ -18,8 +27,6 @@ function link_dotfile {
 }
 
 # Link the dotfiles
-dotfiles=$(ls -1 | grep -v README.md | grep -v base16 | grep -v make.initialize.sh)
-
 echo Linking dotfile directories to home
 
 for file in $dotfiles; do
@@ -37,6 +44,7 @@ echo Initializing prezto files
 for file in $prezto_files; do
   link_dotfile $prezto_dir/$file
 done
+
 echo
 
 # Set up vim
