@@ -1,9 +1,9 @@
 [submodule "zprezto"]
-	path = zprezto
+	path = configs/zprezto
 	url = git@github.com:aaron-williamson/prezto
 [submodule "vim"]
-	path = vim
+	path = configs/vim
 	url = git@github.com:aaron-williamson/vimdir
 [submodule "emacs.d"]
-	path = emacs.d
+	path = configs/emacs.d
 	url = git@github.com:aaron-williamson/emacs-config
