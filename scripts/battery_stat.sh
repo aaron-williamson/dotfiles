@@ -32,7 +32,7 @@ elif [[ $percent_num -lt 30 ]]; then
   color=red
 fi
 
-status_string="#[fg=white]-#[fg=$color]"
+status_string="#[fg=$color]"
 
 if [[ $charging -eq 1 ]]; then
   status_string="$status_string ⚡"
@@ -44,7 +44,7 @@ if [[ "$remaining" != "0" ]]; then
   status_string="$status_string $remaining"
 fi
 
-status_string="$status_string $percent "
+status_string="$status_string $percent #[fg=white]-#[fg=default]"
 
 if [[ $percent != "100%" || $charging -eq 0 ]]; then
   echo "$status_string"
