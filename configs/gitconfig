@@ -27,6 +27,7 @@
   lb = branch --list
   lbr = branch -r --list
   lba = branch -a
+  sm = submodule
 [push]
   default = simple
 [status]
