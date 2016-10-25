@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Vim mode
+set -o vi
+
+# Prompt
+export PS1="[\u@\h \W]\$ "

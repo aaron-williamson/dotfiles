@@ -1,0 +1,8 @@
+#!/bin/bash
+# Make sure to read bashrc every time we log in
+if [ -f ~/.bashrc ]
+  then
+    source ~/.bashrc
+fi
+
+eval "$(rbenv init -)"
