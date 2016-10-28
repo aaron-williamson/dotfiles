@@ -6,7 +6,7 @@ battery=$(pmset -g batt | grep InternalBattery-0)
 charging=$(awk -v battery="$battery" 'BEGIN{ split(battery, a, ";")
                                              gsub("[[:space:]]", "", a[2])
                                              if (a[2] == "charging" || a[2] == "finishingcharge" ||
-                                                 a[2] == "charged")
+                                                 a[2] == "charged" || a[2] == "ACattached")
                                                printf("1")
                                              else
                                                printf("0") }')
@@ -15,7 +15,7 @@ percent=$(awk -v battery="$battery" 'BEGIN{ split (battery, a, ";")
                                             printf "%s", b[2] }')
 remaining=$(awk -v battery="$battery" 'BEGIN{ split (battery, a, ";")
                                               split (a[3], b)
-                                              if (b[1] != "(no")
+                                              if (b[1] != "(no" && b[1] != "not")
                                                 printf "%s", b[1]
                                               else
                                                 printf "0" }')
