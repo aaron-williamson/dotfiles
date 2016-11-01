@@ -24,6 +24,7 @@
   sb = show-branch --list
   sbo = ls-remote -h origin
   sbu = ls-remote -h upstream
+  sbr = !git sbo
   lb = branch --list
   lbr = branch -r --list
   lba = branch -a
