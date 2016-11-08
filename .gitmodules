@@ -4,6 +4,3 @@
 [submodule "vim"]
 	path = configs/vim
 	url = git@github.com:aaron-williamson/vimdir
-[submodule "emacs.d"]
-	path = configs/emacs.d
-	url = git@github.com:aaron-williamson/emacs-config
