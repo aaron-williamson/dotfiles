@@ -5,4 +5,8 @@ if [ -f ~/.bashrc ]
     source ~/.bashrc
 fi
 
-eval "$(rbenv init -)"
+export editor=vim
+
+if [[ -n $(command -v rbenv) ]]; then
+  eval "$(rbenv init -)"
+fi
