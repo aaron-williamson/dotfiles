@@ -33,3 +33,5 @@
   default = simple
 [status]
   submodulesummary = 1
+[color]
+  ui = auto
