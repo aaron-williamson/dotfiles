@@ -6,6 +6,7 @@ if [ -f ~/.bashrc ]
 fi
 
 export editor=vim
+export LESS='-F -g -i -M -R -S -w -X -z-4'
 
 if [[ -n $(command -v rbenv) ]]; then
   eval "$(rbenv init -)"

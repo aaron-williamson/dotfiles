@@ -2,6 +2,10 @@
 
 # Vim mode
 set -o vi
+alias vi="vim"
+alias ls="ls -lhF --color=auto"
+alias la="ls -alhF --color=auto"
+alias quit="exit"
 
 # Prompt
 export PS1="[\u@\h \W]\$ "
