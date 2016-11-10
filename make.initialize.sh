@@ -189,7 +189,7 @@ function vim {
   echo Linking vim dotfiles...
   link_dotfile $config_dir/vim
 
-  if ! $NO_VIM_PLUGINS || [[ $NO_VIM_PLUGINS -eq 0 ]]; then
+  if [[ -z $NO_VIM_PLUGINS || $NO_VIM_PLUGINS -eq 0 ]]; then
     echo Running vim plugin setup...
     sh $config_dir/vim/plugin_setup.sh
   fi
