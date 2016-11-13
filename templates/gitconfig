@@ -8,6 +8,9 @@
   conflictstyle = diff3
 [mergetool]
   prompt = false
+[user]
+  email = {{GIT_EMAIL}}
+  name = {{GIT_NAME}}
 [alias]
   dt = difftool
   lg = log --graph --oneline
@@ -29,9 +32,8 @@
   lbr = branch -r --list
   lba = branch -a
   sm = submodule
-[push]
-  default = simple
 [status]
   submodulesummary = 1
 [color]
   ui = auto
+{{GIT_PUSH}}

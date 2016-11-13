@@ -14,21 +14,19 @@ set -e
 
 current_dir=$( cd "$( dirname ${BASH_SOURCE[0]} )" && pwd )
 
-# Directory of config files
+# Different directories used in the script
 config_dir=$current_dir/configs
-
-# Do not force by default
-force=false
-
-# Check for neovim by default
-neovim_check=true
+template_dir=$current_dir/templates
+script_dir=$current_dir/scripts
 
 # Options to be set by command line args
-only=false
 exclude=false
+force=false
+interactive=false
+only=false
 
 # Runlist includes everything by default
-all_configs="tmux prezto vim neovim git ruby bash ag"
+all_configs="tmux prezto neovim vim vim_plugins git ruby bash ag"
 runlist="${all_configs}"
 
 
@@ -50,18 +48,22 @@ Note: You can chain multiple options together, for example:
 Options:
   -e [config] | Exclude this config from the run
   -f          | Force linking, this will overwrite any files
+  -i          | Interactive, prompt before overwriting
   -h          | Help, show this dialogue
+  -m          | eMail to use for git config (Make sure to use quotes)
+  -n          | Name to use for git config (Make sure to use quotes)
   -o [config] | Only perform configuration for this config
 
 Configs:
-  tmux   - The terminal multiplexer
-  prezto - Zsh configuration suite
-  vim    - Awesome text editor
-  neovim - Awesomer version of the awesome text editor
-  git    - Git configuration
-  ruby   - Ruby configuration
-  bash   - Bash configuration
-  ag     - Silver searcher configuration
+  tmux        - The terminal multiplexer
+  prezto      - Zsh configuration suite
+  vim         - Awesome text editor
+  neovim      - Awesomer version of the awesome text editor
+  vim_plugins - Run the plugin_setup script to set up vim/neovim plugins
+  git         - Git configuration
+  ruby        - Ruby configuration
+  bash        - Bash configuration
+  ag          - Silver searcher configuration
 EOF
 }
 
@@ -91,22 +93,51 @@ function argument_check {
     fi
   done
 
-  echo "Error, argument -o $1 invalid"
+  echo "Error, argument -o/-e $1 invalid"
   usage
   exit 1
 }
 
 # Links the given file to the home directory
 function link_dotfile {
-  dest="${HOME}/.$(basename $1)"
+  source=$1
+  if [[ $# -eq 1 ]]; then
+    dest="${HOME}/.$(basename $1)"
+  else
+    dest=$2
+  fi
+
   if $force; then
-    echo Forcing link from $1 to $dest
-    ln -f -s $1 $dest
-  elif [[ -e $dest ]] && prompt $dest; then
-    ln -f -s $1 $dest
+    echo Forcing link from $source to $dest
+    ln -f -s $source $dest
+  elif [[ -e $dest ]] && $interactive; then
+    prompt $dest && ln -f -s $source $dest
   elif [[ ! -e $dest ]]; then
-    echo Creating link from $1 to $dest
-    ln -s $1 $dest
+    echo Creating link from $source to $dest
+    ln -s $source $dest
+  else
+    echo File $dest exists, skipping link from $source to $dest
+  fi
+}
+
+function template_dotfile {
+  source=$1
+  if [[ $# -eq 1 ]]; then
+    dest="${HOME}/.$(basename $1)"
+  else
+    dest=$2
+  fi
+
+  if $force; then
+    echo Forcing template from $source at $dest
+    cat $1 | $script_dir/mo > $dest
+  elif [[ -e $dest ]] && $interactive; then
+    prompt $dest && (cat $1 | $script_dir/mo > $dest)
+  elif [[ ! -e $dest ]]; then
+    echo Creating template from $source at $dest
+    cat $1 | $script_dir/mo > $dest
+  else
+    echo File $dest exists, skipping template from $source at $dest
   fi
 }
 
@@ -114,28 +145,31 @@ function link_dotfile {
 function configure {
   case $1 in
     ag)
-      ag
+      ag_config
       ;;
     bash)
-      bash
+      bash_config
       ;;
     git)
-      git
+      git_config
       ;;
     neovim)
-      neovim
+      neovim_config
       ;;
     prezto)
-      prezto
+      prezto_config
       ;;
     ruby)
-      ruby
+      ruby_config
       ;;
     tmux)
-      tmux
+      tmux_config
       ;;
     vim)
-      vim
+      vim_config
+      ;;
+    vim_plugins)
+      vim_plugins
       ;;
   esac
 }
@@ -171,12 +205,12 @@ function run_setup {
 
 
 ### Begin configuration functions ###
-function prezto {
+function prezto_config {
   prezto_dir=$config_dir/zprezto/runcoms
   prezto_files=$(ls -1 $prezto_dir | grep -v README.md)
 
   echo Linking zprezto dotfiles...
-  link_dotfile zprezto
+  link_dotfile $config_dir/zprezto
 
   for file in $prezto_files; do
     link_dotfile $prezto_dir/$file
@@ -185,33 +219,38 @@ function prezto {
   echo
 }
 
-function vim {
+function vim_config {
   echo Linking vim dotfiles...
   link_dotfile $config_dir/vim
-
-  if [[ -z $NO_VIM_PLUGINS || $NO_VIM_PLUGINS -eq 0 ]]; then
-    echo Running vim plugin setup...
-    sh $config_dir/vim/plugin_setup.sh
-  fi
   echo Done vim setup
   echo
 }
 
-function tmux {
+function vim_plugins {
+  if [[ -z $NO_VIM_PLUGINS || $NO_VIM_PLUGINS -eq 0 ]]; then
+    echo Running vim plugin setup...
+    sh $config_dir/vim/plugin_setup.sh
+  else
+    echo "Error, NO_VIM_PLUGINS is ${NO_VIM_PLUGINS}"
+    echo "Skipping vim plugin setup"
+  fi
+}
+
+function tmux_config {
   echo Linking tmux dotfiles...
   link_dotfile $config_dir/tmux.conf
   echo Done tmux setup
   echo
 }
 
-function ag {
+function ag_config {
   echo Linking silver searcher dotfiles...
   link_dotfile $config_dir/agignore
   echo Done silver searcher setup
   echo
 }
 
-function bash {
+function bash_config {
   echo Linking bash dotfiles...
   link_dotfile $config_dir/bash_profile
   link_dotfile $config_dir/bashrc
@@ -219,7 +258,7 @@ function bash {
   echo
 }
 
-function ruby {
+function ruby_config {
   echo Linking ruby dotfiles...
   link_dotfile $config_dir/irbrc
   link_dotfile $config_dir/gemrc
@@ -227,30 +266,53 @@ function ruby {
   echo
 }
 
-function neovim {
+function neovim_config {
   if [[ -n $XDG_CONFIG_HOME ]]; then
-    neovim_conf_dir="$XDG_CONFIG_HOME"
+    neovim_config_dir="$XDG_CONFIG_HOME"
   else
-    neovim_conf_dir="$HOME/.config"
+    neovim_config_dir="$HOME/.config"
   fi
 
-  if $force; then
-    echo "Forcing link from ${config_dir}/vim to ${neovim_conf_dir}/nvim"
-    mkdir -p $neovim_conf_dir
-    ln -f -s $config_dir/vim $neovim_conf_dir/nvim
-  elif [[ -e "${neovim_conf_dir}/nvim" ]] && prompt "${neovim_conf_dir}/nvim"; then
-    mkdir -p $neovim_conf_dir
-    ln -f -s $config_dir/vim $neovim_conf_dir/nvim
-  elif [[ ! -e "${neovim_conf_dir}/nvim" ]]; then
-    echo "Linking ${config_dir}/vim to ${neovim_conf_dir}/nvim"
-  fi
+  link_dotfile $config_dir/vim $neovim_config_dir/nvim
   echo Done neovim setup
   echo
 }
 
-function git {
-  echo Linking git dotfiles...
-  link_dotfile $config_dir/gitconfig
+function git_config {
+  echo Creating git config based on template...
+
+  # Make sure we have a name
+  if [[ -z $git_name ]]; then
+    echo "Please input the name you wish to use for git:"
+    read git_name
+  fi
+
+  # Make sure we have an email
+  if [[ -z $git_email ]]; then
+    echo "Please input the email you wish to use for git:"
+    read git_email
+  fi
+
+  # Check for git version (for push: simple)
+  git_version=$(git --version | cut -d ' ' -f3)
+  git_major=$(echo $git_version | cut -d '.' -f1)
+  git_minor=$(echo $git_version | cut -d '.' -f2)
+
+  if [[ $git_major -ge 2 ]] || [[ $git_major -eq 1 && $git_minor -ge 8 ]]; then
+    # Set the push var
+    export GIT_PUSH=$(cat <<EOF
+[push]
+  default = upstream
+EOF
+)
+  fi
+
+  # Set the name and email vars
+  export GIT_NAME=$git_name
+  export GIT_EMAIL=$git_email
+
+  template_dotfile $template_dir/gitconfig
+
   echo Done git setup
   echo
 }
@@ -260,7 +322,7 @@ function git {
 # Ensure we're in the dotfiles directory
 cd $current_dir
 
-while getopts ":e:fho:" opt; do
+while getopts ":e:fhim:n:o:" opt; do
   case $opt in
     e)
       argument_check $OPTARG
@@ -277,6 +339,15 @@ while getopts ":e:fho:" opt; do
     h)
       usage
       exit 0
+      ;;
+    i)
+      interactive=true
+      ;;
+    m)
+      git_email=$OPTARG
+      ;;
+    n)
+      git_name=$OPTARG
       ;;
     o)
       argument_check $OPTARG
