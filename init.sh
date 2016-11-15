@@ -129,15 +129,15 @@ function template_dotfile {
   fi
 
   if $force; then
-    echo Forcing template from $source at $dest
+    echo Forcing file $dest from template $source
     cat $1 | $script_dir/mo > $dest
   elif [[ -e $dest ]] && $interactive; then
     prompt $dest && (cat $1 | $script_dir/mo > $dest)
   elif [[ ! -e $dest ]]; then
-    echo Creating template from $source at $dest
+    echo Creating file $dest from template $source
     cat $1 | $script_dir/mo > $dest
   else
-    echo File $dest exists, skipping template from $source at $dest
+    echo File $dest exists, skipping creation from template $source
   fi
 }
 
