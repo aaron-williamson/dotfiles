@@ -48,7 +48,7 @@ Note: You can chain multiple options together, for example:
 Options:
   -e [config] | Exclude this config from the run
   -f          | Force linking, this will overwrite any files
-  -i          | Interactive, prompt before overwriting
+  -i          | Interactive, prompt when file exists instead of just quitting
   -h          | Help, show this dialogue
   -m          | eMail to use for git config (Make sure to use quotes)
   -n          | Name to use for git config (Make sure to use quotes)
