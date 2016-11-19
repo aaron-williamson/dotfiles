@@ -7,5 +7,8 @@ alias ls="ls -lhF --color=auto"
 alias la="ls -alhF --color=auto"
 alias quit="exit"
 
+# Enable ctrl-f for searching history forward
+bind '\C-f:forward-search-history'
+
 # Prompt
 export PS1="[\u@\h \W]\$ "
