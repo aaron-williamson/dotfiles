@@ -26,7 +26,7 @@ interactive=false
 only=false
 
 # Runlist includes everything by default
-all_configs="tmux inputrc prezto neovim vim vim_plugins git ruby bash ag"
+all_configs="tmux inputrc prezto neovim vim vim_plugins ruby bash ag git"
 runlist="${all_configs}"
 
 
@@ -55,16 +55,16 @@ Options:
   -o [config] | Only perform configuration for this config
 
 Configs:
-  tmux        - The terminal multiplexer
-  inputrc     - Input configuration for terminals
-  prezto      - Zsh configuration suite
-  vim         - Awesome text editor
-  neovim      - Awesomer version of the awesome text editor
-  vim_plugins - Run the plugin_setup script to set up vim/neovim plugins
-  git         - Git configuration
-  ruby        - Ruby configuration
-  bash        - Bash configuration
   ag          - Silver searcher configuration
+  bash        - Bash configuration
+  git         - Git configuration
+  inputrc     - Input configuration for terminals
+  neovim      - Awesomer version of the awesome text editor
+  prezto      - Zsh configuration suite
+  ruby        - Ruby configuration
+  tmux        - The terminal multiplexer
+  vim         - Awesome text editor
+  vim_plugins - Run the plugin_setup script to set up vim/neovim plugins
 EOF
 }
 
@@ -155,7 +155,7 @@ function configure {
       git_config
       ;;
     inputrc)
-      inputrc
+      inputrc_config
       ;;
     neovim)
       neovim_config
@@ -247,7 +247,7 @@ function tmux_config {
   echo
 }
 
-function inputrc {
+function inputrc_config {
   echo Linking inputrc dotfiles...
   link_dotfile $config_dir/inputrc
   echo Done inputrc setup
