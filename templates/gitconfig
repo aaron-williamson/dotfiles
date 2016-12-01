@@ -1,6 +1,6 @@
 [diff]
   tool = vimdiff
-  submodule = log
+  {{GIT_SUBMODULE}}
 [difftool]
   prompt = false
 [merge]

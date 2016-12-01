@@ -45,6 +45,13 @@ EOF
 )
   fi
 
+  if [[ $git_major -ge 2  && $git_minor -ge 11 ]]; then
+    # Set the submodule var
+    export GIT_SUBMODULE="submodule = diff"
+  else
+    export GIT_SUBMODULE="submodule = log"
+  fi
+
   # Set the name and email vars
   export GIT_NAME=$git_name
   export GIT_EMAIL=$git_email
