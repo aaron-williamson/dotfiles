@@ -44,7 +44,7 @@ if [[ "$remaining" != "0" ]]; then
   status_string="$status_string $remaining"
 fi
 
-status_string="$status_string $percent #[fg=white]-#[fg=default]"
+status_string="$status_string $percent #[fg=yellow]-#[fg=default]"
 
 if [[ $percent != "100%" || $charging -eq 0 ]]; then
   echo "$status_string"
