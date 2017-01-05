@@ -83,8 +83,13 @@ ul, ol {
   padding-left: 2em;
 }
 
+ul ul, ul ol, ol ol, ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 p, blockquote, ul, ol, dl, table, pre {
-  margin-top: 0px;
+  margin-top: 0;
   margin-bottom: 16px;
 }
 
@@ -139,7 +144,7 @@ code::before, code::after {
 }
 
 .task-list-item-checkbox {
-  margin-top: 0px;
+  margin-top: 0;
   margin-right: 0.2em;
   margin-bottom: 0.25em;
   margin-left: -1.6em;
