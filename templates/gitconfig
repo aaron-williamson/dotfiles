@@ -16,6 +16,7 @@
   lg = log --graph --oneline
   st = status
   aa = add --all
+  ap = add -p
   amend = commit --amend
   di = diff
   dc = diff --cached
