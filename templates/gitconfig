@@ -33,6 +33,7 @@
   lbr = branch -r --list
   lba = branch -a
   sm = submodule
+  rv = remote -v
 [status]
   submodulesummary = 1
 [color]
