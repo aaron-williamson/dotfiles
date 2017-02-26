@@ -3,17 +3,17 @@
 set -e
 
 battery=$(pmset -g batt | grep InternalBattery-0)
-charging=$(awk -v battery="$battery" 'BEGIN{ split(battery, a, ";")
-                                             gsub("[[:space:]]", "", a[2])
+battery_status=$(echo "${battery}" | sed -n -e $'s/^.*\t//p')
+plugged_in=$(awk -v battery="$battery_status" 'BEGIN{ split(battery, a, ";")
+                                             sub("[[:space:]]", "", a[2])
                                              if (a[2] == "charging" || a[2] == "finishingcharge" ||
                                                  a[2] == "charged" || a[2] == "ACattached")
-                                               printf("1")
+                                               printf("true")
                                              else
-                                               printf("0") }')
-percent=$(awk -v battery="$battery" 'BEGIN{ split (battery, a, ";")
-                                            split (a[1], b)
-                                            printf "%s", b[2] }')
-remaining=$(awk -v battery="$battery" 'BEGIN{ split (battery, a, ";")
+                                               printf("false") }')
+percent=$(awk -v battery="$battery_status" 'BEGIN{ split (battery, a, ";")
+                                            printf "%s", a[1] }')
+remaining=$(awk -v battery="$battery_status" 'BEGIN{ split (battery, a, ";")
                                               split (a[3], b)
                                               if (b[1] != "(no" && b[1] != "not")
                                                 printf "%s", b[1]
@@ -22,7 +22,7 @@ remaining=$(awk -v battery="$battery" 'BEGIN{ split (battery, a, ";")
 percent_num=$(awk -v per="$percent" 'BEGIN{ sub("%", "", per)
                                             printf "%s", per }')
 
-if [[ $charging -eq 1 ]]; then
+if [[ $plugged_in -eq 1 ]]; then
   color=blue
 elif [[ $percent_num -ge 70 ]]; then
   color=green
@@ -44,8 +44,8 @@ if [[ "$remaining" != "0" ]]; then
   status_string="$status_string $remaining"
 fi
 
-status_string="$status_string $percent #[fg=yellow]-#[fg=default]"
+status_string="${status_string} ${percent} #[fg=yellow]-#[fg=default]"
 
-if [[ $percent != "100%" || $charging -eq 0 ]]; then
-  echo "$status_string"
+if [[ $percent_num -ne 100 ]] || [[ "${plugged_in}" == "false" ]]; then
+ echo "$status_string"
 fi
