@@ -18,11 +18,11 @@ remaining=$(awk -v battery="$battery_status" 'BEGIN{ split (battery, a, ";")
                                               if (b[1] != "(no" && b[1] != "not")
                                                 printf "%s", b[1]
                                               else
-                                                printf "0" }')
+                                                printf "false" }')
 percent_num=$(awk -v per="$percent" 'BEGIN{ sub("%", "", per)
                                             printf "%s", per }')
 
-if [[ $plugged_in -eq 1 ]]; then
+if [[ "${plugged_in}" == "true" ]]; then
   color=blue
 elif [[ $percent_num -ge 70 ]]; then
   color=green
@@ -32,20 +32,20 @@ elif [[ $percent_num -lt 30 ]]; then
   color=red
 fi
 
-status_string="#[fg=$color]"
+status_string="#[fg=${color}]"
 
-if [[ $charging -eq 1 ]]; then
-  status_string="$status_string ⚡"
+if [[ "${plugged_in}" == "true" ]]; then
+  status_string="${status_string} ⚡"
 else
-  status_string="$status_string 🔋"
+  status_string="${status_string} 🔋"
 fi
 
-if [[ "$remaining" != "0" ]]; then
-  status_string="$status_string $remaining"
+if [[ "${remaining}" != "false" ]]; then
+  status_string="${status_string} ${remaining}"
 fi
 
 status_string="${status_string} ${percent} #[fg=yellow]-#[fg=default]"
 
 if [[ $percent_num -ne 100 ]] || [[ "${plugged_in}" == "false" ]]; then
- echo "$status_string"
+ echo "${status_string}"
 fi
