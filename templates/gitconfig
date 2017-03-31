@@ -36,6 +36,8 @@
   rv = remote -v
 [status]
   submodulesummary = 1
+[rerere]
+  enabled = true
 [color]
   ui = auto
 {{GIT_PUSH}}
