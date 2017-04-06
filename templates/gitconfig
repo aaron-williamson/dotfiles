@@ -5,7 +5,7 @@
   prompt = false
 [merge]
   tool = vimdiff
-  conflictstyle = diff3
+  conflictStyle = diff3
 [mergetool]
   prompt = false
 [user]
