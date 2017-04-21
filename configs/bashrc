@@ -2,9 +2,24 @@
 
 # Vim mode
 set -o vi
-alias vi="vim"
-alias ls="ls -lhF --color=auto"
-alias la="ls -alhF --color=auto"
+
+# Alias neovim if we have it
+if hash "nvim"; then
+  alias vim="nvim"
+  alias vi="nvim"
+else
+  alias vi="vim"
+fi
+
+# Mac aliases for ls
+if [[ "$OSTYPE" == darwin* ]]; then
+  alias ls="ls -lhFG"
+  alias la="ls -alhGF"
+else
+  alias ls="ls -lhF --color=auto"
+  alias la="ls -alhF --color=auto"
+fi
+
 alias quit="exit"
 
 # Enable ctrl-f for searching history forward
