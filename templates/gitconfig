@@ -13,6 +13,7 @@
   name = {{GIT_NAME}}
 [alias]
   dt = difftool
+  dw = diff -w
   lg = log --graph --oneline
   st = status
   aa = add --all
@@ -24,6 +25,7 @@
   ci = commit --verbose
   fa = fetch --all
   lp = !git lg -p
+  lpw = !git lg -p -w
   rt = rev-parse --show-toplevel
   sb = show-branch --list
   sbo = ls-remote -h origin
