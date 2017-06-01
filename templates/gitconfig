@@ -28,9 +28,9 @@
   lpw = !git lg -p -w
   rt = rev-parse --show-toplevel
   sb = show-branch --list
+  sba = ls-remote -h aaron
   sbo = ls-remote -h origin
   sbu = ls-remote -h upstream
-  sbr = !git sbo
   lb = branch --list
   lbr = branch -r --list
   lba = branch -a
