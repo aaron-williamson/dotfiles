@@ -43,6 +43,8 @@ function git_config {
   default = upstream
 EOF
 )
+    # Set the diff algorthm var
+    export DIFF_ALGORITHM="algorithm = patience"
   fi
 
   if [[ $git_major -ge 2  && $git_minor -ge 11 ]]; then

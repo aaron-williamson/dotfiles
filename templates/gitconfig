@@ -1,6 +1,7 @@
 [diff]
   tool = vimdiff
   {{GIT_SUBMODULE}}
+  {{DIFF_ALGORITHM}}
 [difftool]
   prompt = false
 [merge]
@@ -12,9 +13,12 @@
   email = {{GIT_EMAIL}}
   name = {{GIT_NAME}}
 [alias]
+  alias = "!f() { git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ / | grep \"^$1\\b\"; }; f"
   dt = difftool
   dw = diff -w
   lg = log --graph --oneline
+  lgp = !git lg -p
+  lgpw = !git lg -p -w
   st = status
   aa = add --all
   ap = add -p
@@ -24,8 +28,8 @@
   co = checkout
   ci = commit --verbose
   fa = fetch --all
-  lp = !git lg -p
-  lpw = !git lg -p -w
+  lp = log -p
+  lpw = log -p -w
   rt = rev-parse --show-toplevel
   sb = show-branch --list
   sba = ls-remote -h aaron
