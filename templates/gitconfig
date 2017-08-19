@@ -1,49 +1,65 @@
+[core]
+	pager = diff-so-fancy | less
 [diff]
-  tool = vimdiff
-  {{GIT_SUBMODULE}}
-  {{DIFF_ALGORITHM}}
+	tool = vimdiff
+	{{GIT_SUBMODULE}}
+	{{DIFF_ALGORITHM}}
 [difftool]
-  prompt = false
+	prompt = false
 [merge]
-  tool = vimdiff
-  conflictStyle = diff3
+	tool = vimdiff
+	conflictStyle = diff3
 [mergetool]
-  prompt = false
+	prompt = false
 [user]
-  email = {{GIT_EMAIL}}
-  name = {{GIT_NAME}}
+	email = {{GIT_EMAIL}}
+	name = {{GIT_NAME}}
 [alias]
-  alias = "!f() { git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ / | grep \"^$1\\b\"; }; f"
-  dt = difftool
-  dw = diff -w
-  lg = log --graph --oneline
-  lgp = !git lg -p
-  lgpw = !git lg -p -w
-  st = status
-  aa = add --all
-  ap = add -p
-  amend = commit --amend
-  di = diff
-  dc = diff --cached
-  co = checkout
-  ci = commit --verbose
-  fa = fetch --all
-  lp = log -p
-  lpw = log -p -w
-  rt = rev-parse --show-toplevel
-  sb = show-branch --list
-  sba = ls-remote -h aaron
-  sbo = ls-remote -h origin
-  sbu = ls-remote -h upstream
-  lb = branch --list
-  lbr = branch -r --list
-  lba = branch -a
-  sm = submodule
-  rv = remote -v
+	alias = "!f() { git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ / | grep \"^$1\\b\"; }; f"
+	get-pr = "!f() { git fetch $1 refs/pull/$2/head:$1-pr-$2; }; f"
+	dt = difftool
+	dw = diff -w
+	lg = log --graph --oneline
+	lgp = !git lg -p
+	lgpw = !git lg -p -w
+	st = status
+	aa = add --all
+	ap = add -p
+	amend = commit --amend
+	di = diff
+	dc = diff --cached
+	co = checkout
+	ci = commit --verbose
+	fa = fetch --all
+	lp = log -p
+	lpw = log -p -w
+	rt = rev-parse --show-toplevel
+	sb = show-branch --list
+	sba = ls-remote -h aaron
+	sbo = ls-remote -h origin
+	sbu = ls-remote -h upstream
+	lb = branch --list
+	lbr = branch -r --list
+	lba = branch -a
+	bv = branch -vv
+	sm = submodule
+	rv = remote -v
 [status]
-  submodulesummary = 1
+	submodulesummary = 1
 [rerere]
-  enabled = true
+	enabled = true
 [color]
-  ui = auto
+	ui = auto
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
 {{GIT_PUSH}}

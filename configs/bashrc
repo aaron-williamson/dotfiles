@@ -34,8 +34,10 @@ fi
 
 alias quit="exit"
 
-# Enable ctrl-f for searching history forward
+# key bindings
+stty werase undef
 bind '\C-f:forward-search-history'
+bind '\C-w:backward-kill-word'
 
 # Prompt
 export PS1="[\u@\h \W]\$ "
