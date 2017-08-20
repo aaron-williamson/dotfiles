@@ -1,9 +1,11 @@
-[core]
-	pager = diff-so-fancy | less
 [diff]
 	tool = vimdiff
-	{{GIT_SUBMODULE}}
-	{{DIFF_ALGORITHM}}
+<% if config[:submodule] -%>
+	submodule = <%= config[:submodule] %>
+<% end -%>
+<% if config[:diff] -%>
+	algorithm = <%= config[:diff] %>
+<% end -%>
 [difftool]
 	prompt = false
 [merge]
@@ -12,8 +14,8 @@
 [mergetool]
 	prompt = false
 [user]
-	email = {{GIT_EMAIL}}
-	name = {{GIT_NAME}}
+	email = <%= config[:email] %>
+	name = <%= config[:user] %>
 [alias]
 	alias = "!f() { git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ / | grep \"^$1\\b\"; }; f"
 	get-pr = "!f() { git fetch $1 refs/pull/$2/head:$1-pr-$2; }; f"
@@ -50,6 +52,9 @@
 	enabled = true
 [color]
 	ui = auto
+<% if config[:fancy_diff] -%>
+[core]
+	pager = diff-so-fancy | less
 [color "diff-highlight"]
 	oldNormal = red bold
 	oldHighlight = red bold 52
@@ -62,4 +67,8 @@
 	old = red bold
 	new = green bold
 	whitespace = red reverse
-{{GIT_PUSH}}
+<% end -%>
+<% if config[:push] -%>
+[push]
+	default = <%= config[:push] %>
+<% end -%>
