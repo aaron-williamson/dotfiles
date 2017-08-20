@@ -1,17 +1,19 @@
-require_relative 'dotfile'
-require 'open3'
+require 'dotfile_command_base'
 
 module DotfilesCLI
-  class Git < Dotfile
-    desc 'setup', 'generate gitconfig from template'
-    class_option 'git-user'
-    class_option 'git-email'
-    class_option 'git-push'
+  class Git < DotfileCommandBase
+    desc 'generate gitconfig from template'
+    class_option 'git-user', desc: 'The user name to put in the gitconfig'
+    class_option 'git-email', desc: 'The user email to put in the gitconfig'
+    class_option 'git-push', desc: 'What value to use for push.default inthe gitconfig'
+    get_options_from_invocations
+
     def setup(*_args)
-      return if find_executable('git').nil?
+      return unless executable_in_path?('git')
+      puts options.inspect
 
       dest_config = File.join(options[:destination], '.gitconfig')
-      fancy_diff  = !find_executable('diff-so-fancy').nil?
+      fancy_diff  = executable_in_path?('diff-so-fancy')
       user  = options['git-user']
       email = options['git-email']
 

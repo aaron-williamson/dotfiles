@@ -1,11 +1,13 @@
-require_relative 'dotfile'
+require 'dotfile_command_base'
 
 module DotfilesCLI
-  class Prezto < Dotfile
-    desc 'setup', 'link prezto configuration files'
+  class Prezto < DotfileCommandBase
+    desc 'Link prezto configuration files'
+
     def setup(*_args)
       prezto_dir         = File.join(options[:configs], 'zprezto')
       prezto_runcoms_dir = File.join(prezto_dir, 'runcoms')
+
       create_link File.join(options[:destination], '.zprezto'), prezto_dir
 
       %w[

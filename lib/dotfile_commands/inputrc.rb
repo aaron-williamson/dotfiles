@@ -1,8 +1,9 @@
-require_relative 'dotfile'
+require 'dotfile_command_base'
 
 module DotfilesCLI
-  class Inputrc < Dotfile
-    desc 'setup', 'link inputrc file'
+  class Inputrc < DotfileCommandBase
+    desc 'Link inputrc file'
+
     def setup(*_args)
       create_link File.join(options[:destination], '.inputrc'), File.join(options[:configs], 'inputrc')
     end

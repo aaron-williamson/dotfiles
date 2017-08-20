@@ -1,4 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative 'lib/dotfiles_cli'
+# Add the local lib directory to load path for easier includes
+$LOAD_PATH << File.expand_path('../lib', __FILE__)
+
+require 'dotfiles_cli'
+
 DotfilesCLI::Dotfiles.start

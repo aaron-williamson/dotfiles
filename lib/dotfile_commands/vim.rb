@@ -1,18 +1,18 @@
-require_relative 'dotfile'
-require 'mkmf'
+require 'dotfile_command_base'
 
 module DotfilesCLI
-  class Vim < Dotfile
-    desc 'setup', 'link vim/neovim config directories'
+  class Vim < DotfileCommandBase
+    desc 'Link vim/neovim config directories'
+
     def setup(*_args)
-      unless find_executable('nvim').nil?
+      if executable_in_path?('nvim')
         config = ENV['XDG_CONFIG_HOME'] || File.join(options[:destination], '.config')
         empty_directory config
         create_link File.join(config, 'nvim'), File.join(options[:configs], 'vim')
       end
 
       # rubocop:disable GuardClause
-      unless find_executable('vim').nil?
+      if executable_in_path?('vim')
         create_link File.join(options[:destination], '.vim'), File.join(options[:configs], 'vim')
       end
       # rubocop:enable GuardClause
