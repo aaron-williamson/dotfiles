@@ -5,4 +5,4 @@ $LOAD_PATH << File.expand_path('../lib', __FILE__)
 
 require 'dotfiles_cli'
 
-DotfilesCLI::Dotfiles.start
+DotfilesCli::Dotfiles.start

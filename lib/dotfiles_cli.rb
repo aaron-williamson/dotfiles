@@ -6,29 +6,35 @@ DOTFILE_COMMAND_FILES.each do |file|
   require file.gsub(/\.rb$/, '')
 end
 
-module DotfilesCLI
+module DotfilesCli
   class Dotfiles < Thor
-    class_option :destination, default: Dir.home
-    class_option :configs,     default: File.expand_path('../configs', File.dirname(__FILE__))
-    class_option :templates,   default: File.expand_path('../templates', File.dirname(__FILE__))
+
+    # rubocop:disable LineLength
+    class_option :destination,  desc: 'Where to link dotfiles/render dotfile templates', default: Dir.home
+    class_option :configs,      desc: 'Where to look for dotfiles to link',              default: File.expand_path('../configs', File.dirname(__FILE__))
+    class_option :templates,    desc: 'Where to look for dotfile templates to render',   default: File.expand_path('../templates', File.dirname(__FILE__))
+    # rubocop:enable LineLength
 
     desc 'all', 'run all dotfile configurations'
-    method_option :exclude, aliases: :e, default: []
+    method_option :exclude, aliases: '-e', default: [], desc: 'A list of configurations to exclude from this run'
+
     def all(*_args)
-      puts options.inspect
-      puts 'Under construction'
-      # Dotfiles.subcommands.reject { |sc| options[:exclude].include?(sc) }.each do |cmd|
-      #   invoke cmd, args
-      # end
+      Dotfiles.subcommands.reject { |sc| options[:exclude].include?(sc) }.each do |cmd|
+        invoke cmd, args
+      end
     end
 
-    DOTFILE_COMMAND_FILES.map do |f|
+    # Add the different dotfile subcommands
+    dotfile_objs = DOTFILE_COMMAND_FILES.map do |f|
       basename = File.basename(f.gsub(/\.rb$/, ''))
       const    = basename.split('_').collect(&:capitalize).join
-      Object.const_get("DotfilesCLI::#{const}")
-    end.each do |klass|
+      Object.const_get("DotfilesCli::DotfileCommands::#{const}")
+    end
+
+    dotfile_objs.each do |klass|
       name = klass.to_s.downcase.gsub(/^.*::/, '')
-      register(klass, name, name, "Configure #{name} dotfile(s)")
+      desc name, "Run #{name} dotfile configuration"
+      subcommand name, klass
     end
 
     default_task :all
