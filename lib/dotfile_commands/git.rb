@@ -20,8 +20,8 @@ module DotfilesCli
         if File.exist?(dest_config) && (user.nil? || email.nil?)
           contents = File.read(dest_config)
 
-          user  = contents.match(/^\tname\s+=(.*)$/) { |m| m[1].strip } if user.nil?
-          email = contents.match(/^\temail\s+=(.*)$/) { |m| m[1].strip } if email.nil?
+          user  = contents.match(/^\s+name\s+=(.*)$/) { |m| m[1].strip } if user.nil?
+          email = contents.match(/^\s+email\s+=(.*)$/) { |m| m[1].strip } if email.nil?
         end
 
         # Don't create a config without user and email
