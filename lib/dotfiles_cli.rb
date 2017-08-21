@@ -28,7 +28,7 @@ module DotfilesCli
     dotfile_objs = DOTFILE_COMMAND_FILES.map do |f|
       basename = File.basename(f.gsub(/\.rb$/, ''))
       const    = basename.split('_').collect(&:capitalize).join
-      Object.const_get("DotfilesCli::DotfileCommands::#{const}")
+      DotfilesCli::DotfileCommands.const_get(const)
     end
 
     dotfile_objs.each do |klass|

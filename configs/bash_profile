@@ -7,6 +7,22 @@ fi
 export editor=vim
 export LESS='-F -g -i -M -R -S -w -X -z-4'
 
+# Paths
+# For golang
+GOPATH=$HOME/go
+PATH=$HOME/go/bin:$PATH
+
+# For rustup
+PATH=$HOME/.cargo/bin:$PATH
+
+# Always use user-defined programs before system-defined ones
+PATH=$HOME/bin:$PATH
+
+# For rbenv
+PATH=$HOME/.rbenv/bin:$PATH
+
+export PATH
+
 if [[ -n $(command -v rbenv) ]]; then
   eval "$(rbenv init -)"
 fi
