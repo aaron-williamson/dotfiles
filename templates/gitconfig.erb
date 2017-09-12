@@ -19,6 +19,7 @@
 [alias]
 	alias = "!f() { git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ / | grep \"^$1\\b\"; }; f"
 	get-pr = "!f() { git fetch $1 refs/pull/$2/head:$1-pr-$2; }; f"
+	ds = diff --submodule=short
 	dt = difftool
 	dw = diff -w
 	lg = log --graph --oneline
