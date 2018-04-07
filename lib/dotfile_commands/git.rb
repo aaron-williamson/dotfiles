@@ -1,4 +1,5 @@
 require 'dotfile_command_base'
+require 'git'
 
 module DotfilesCli
   module DotfileCommands
@@ -11,24 +12,14 @@ module DotfilesCli
       def setup(*_args)
         return unless executable_in_path?('git')
 
+        # Set up git config
+        gitconfig
+      end
+
+      def gitconfig
         dest_config = File.join(options[:destination], '.gitconfig')
         fancy_diff  = executable_in_path?('diff-so-fancy')
-        user  = options['git-user']
-        email = options['git-email']
-
-        # Attempt to determine user and/or email from existing config
-        if File.exist?(dest_config) && (user.nil? || email.nil?)
-          contents = File.read(dest_config)
-
-          user  = contents.match(/^\s+name\s+=(.*)$/) { |m| m[1].strip } if user.nil?
-          email = contents.match(/^\s+email\s+=(.*)$/) { |m| m[1].strip } if email.nil?
-        end
-
-        # Don't create a config without user and email
-        if user.nil? || email.nil?
-          say 'ERROR (Git): could not determine gitconfig email and/or user', :red
-          raise Thor::MissingArgumentError
-        end
+        (user, email) = user_and_email
 
         # Determine git version
         git_version = Gem::Version.new(Open3.capture2('git --version').first.split("\s").last)
@@ -54,6 +45,26 @@ module DotfilesCli
                  user: user,
                  email: email,
                  fancy_diff: fancy_diff)
+      end
+
+      def user_and_email
+        # Set these to the empty string if they're not defined so that we can always use .empty?
+        user  = options['git-user'] || ''
+        email = options['git-email'] || ''
+
+        # Attempt to determine user and/or email from existing config
+        if user.empty? || email.empty?
+          user  = Git.global_config('user.name') if user.empty?
+          email = Git.global_config('user.email') if email.empty?
+        end
+
+        # Don't create a config without user and email
+        if user.empty? || email.empty?
+          say 'ERROR (Git): could not determine gitconfig email and/or user', :red
+          raise Thor::MissingArgumentError
+        end
+
+        [user, email]
       end
     end
   end

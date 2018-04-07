@@ -12,12 +12,12 @@ module DotfilesCli
         create_link File.join(options[:destination], '.zprezto'), prezto_dir
 
         %w[
-        zlogin
-        zlogout
-        zpreztorc
-        zprofile
-        zshenv
-        zshrc
+          zlogin
+          zlogout
+          zpreztorc
+          zprofile
+          zshenv
+          zshrc
         ].each do |file|
           create_link File.join(options[:destination], ".#{file}"), File.join(prezto_runcoms_dir, file)
         end

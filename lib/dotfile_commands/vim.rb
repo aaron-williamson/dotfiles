@@ -7,8 +7,7 @@ module DotfilesCli
 
       def setup(*_args)
         if executable_in_path?('nvim')
-          config = ENV['XDG_CONFIG_HOME'] || File.join(options[:destination], '.config')
-          empty_directory config
+          config = config_home
           create_link File.join(config, 'nvim'), File.join(options[:configs], 'vim')
         end
 

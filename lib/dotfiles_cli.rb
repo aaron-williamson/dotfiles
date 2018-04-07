@@ -8,7 +8,6 @@ end
 
 module DotfilesCli
   class Dotfiles < Thor
-
     # rubocop:disable LineLength
     class_option :destination,  desc: 'Where to link dotfiles/render dotfile templates', default: Dir.home
     class_option :configs,      desc: 'Where to look for dotfiles to link',              default: File.expand_path('../configs', File.dirname(__FILE__))

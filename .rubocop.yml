@@ -1,7 +1,7 @@
 Style/Documentation:
   Enabled: false
 
-Style/CyclomaticComplexity:
+Metrics/CyclomaticComplexity:
   Enabled: false
 
 Metrics/LineLength:
