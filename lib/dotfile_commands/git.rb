@@ -16,6 +16,8 @@ module DotfilesCli
         gitconfig
       end
 
+      private
+
       def gitconfig
         dest_config = File.join(options[:destination], '.gitconfig')
         fancy_diff  = executable_in_path?('diff-so-fancy')
@@ -54,8 +56,8 @@ module DotfilesCli
 
         # Attempt to determine user and/or email from existing config
         if user.empty? || email.empty?
-          user  = Git.global_config('user.name') if user.empty?
-          email = Git.global_config('user.email') if email.empty?
+          user  = ::Git.global_config('user.name') if user.empty?
+          email = ::Git.global_config('user.email') if email.empty?
         end
 
         # Don't create a config without user and email
