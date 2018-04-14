@@ -39,6 +39,12 @@ module DotfilesCli
                       'log'
                     end
 
+        decorate_color = if git_version >= Gem::Version.new('1.8.3')
+                           'auto'
+                         else
+                           'bold yellow'
+                         end
+
         template(File.join(options[:templates], 'gitconfig.erb'),
                  dest_config,
                  submodule: submodule,
@@ -46,7 +52,8 @@ module DotfilesCli
                  push: push,
                  user: user,
                  email: email,
-                 fancy_diff: fancy_diff)
+                 fancy_diff: fancy_diff,
+                 decorate_color: decorate_color)
       end
 
       def user_and_email
