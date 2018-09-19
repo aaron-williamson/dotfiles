@@ -6,7 +6,7 @@ module DotfilesCli
       desc '', 'Link prezto configuration files'
 
       def setup(*_args)
-        prezto_dir         = File.join(options[:configs], 'zprezto')
+        prezto_dir         = File.join(options[:configs], 'prezto')
         prezto_runcoms_dir = File.join(prezto_dir, 'runcoms')
 
         create_link File.join(options[:destination], '.zprezto'), prezto_dir

@@ -1,5 +1,5 @@
-[submodule "zprezto"]
-	path = configs/zprezto
+[submodule "prezto"]
+	path = configs/prezto
 	url = git@github.com:aaron-williamson/prezto
 [submodule "vim"]
 	path = configs/vim
