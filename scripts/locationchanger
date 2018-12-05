@@ -1,0 +1,57 @@
+#!/bin/bash
+# This script changes network location based on the name of Wi-Fi network.
+# Modified from https://github.com/eprev/locationchanger
+exec >> "$HOME/Library/Logs/LocationChanger.log" 2>&1
+
+sleep 3
+
+ts() {
+    date +"[%Y-%m-%d %H:%M] $*"
+}
+
+ssid=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep ' SSID' | cut -d : -f 2- | sed 's/^[ ]*//')
+
+location_names=$(scselect | tail -n +2 | cut -d \( -f 2- | sed 's/)$//')
+
+current_location=$(scselect | tail -n +2 | grep -E '^\ +\*' | cut -d \( -f 2- | sed 's/)$//')
+
+ts "Connected to '$ssid'"
+
+config_file="$HOME/.locations/locations.conf"
+
+if [[ -f "$config_file" ]]; then
+    new_ssid=$(grep -E "^\Q${ssid}=" "$config_file" | cut -d = -f 2)
+
+    if [[ -n "$new_ssid" ]]; then
+        ts "Will switch the location to '$new_ssid' (configuration file)"
+        ssid="$new_ssid"
+    else
+        ts "Will switch the location to '$ssid'"
+    fi
+fi
+
+if echo "$location_names" | grep -Eq "^\Q${ssid}\E$"; then
+    new_location="$ssid"
+else
+    if echo "$location_names" | grep -q "^Automatic$"; then
+        new_location="Automatic"
+        ts "Location '$ssid' was not found. Will default to 'Automatic'"
+    else
+        ts "Location '$ssid' was not found. The following locations are available: $location_names"
+        exit 1
+    fi
+fi
+
+if [[ -n "$new_location" ]]; then
+    if [[ "$new_location" != "$current_location" ]]; then
+        ts "Changing the location to '$new_location'"
+        scselect "$new_location"
+        script="$HOME/.locations/$new_location"
+        if [[ -f "$script" ]]; then
+            ts "Running '$script'"
+            "$script"
+        fi
+    else
+        ts "Already at '$new_location'"
+    fi
+fi

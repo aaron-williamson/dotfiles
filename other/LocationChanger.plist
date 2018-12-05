@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<!-- Copy this to ~/Library/LaunchAgents and enable with launchctl load LocationChanger -->
+<dict>
+    <key>Label</key>
+    <string>locationchanger</string>
+    <key>Program</key>
+    <string>/Users/aaron/bin/locationchanger</string>
+    <key>WatchPaths</key>
+    <array>
+        <string>/Library/Preferences/SystemConfiguration/com.apple.airport.preferences.plist</string>
+    </array>
+</dict>
+</plist>
