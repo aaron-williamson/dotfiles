@@ -1,28 +1,8 @@
-#!/bin/bash
-# Make sure to read bashrc every time we log in
-if [ -f "$HOME/.bashrc" ]; then
-  source ~/.bashrc
-fi
+# vim: ft=sh
 
-export editor=vim
-export LESS='-F -g -i -M -R -S -w -X -z-4'
+# Source bashrc if it exists
+bashrc_path="$HOME/.bashrc"
 
-# Paths
-# For golang
-GOPATH=$HOME/go
-PATH=$HOME/go/bin:$PATH
-
-# For rustup
-PATH=$HOME/.cargo/bin:$PATH
-
-# Always use user-defined programs before system-defined ones
-PATH=$HOME/bin:$PATH
-
-# For rbenv
-PATH=$HOME/.rbenv/bin:$PATH
-
-export PATH
-
-if [[ -n $(command -v rbenv) ]]; then
-  eval "$(rbenv init -)"
+if [[ -r "$HOME/.bashrc" ]]; then
+  source "$bashrc_path"
 fi

@@ -1,22 +1,33 @@
-#!/bin/bash
-
 # Vim mode
 set -o vi
 
 # Source machine-specific config
-source "$HOME/.$HOST"
+if [[ -f "$HOME/.$HOSTNAME.bash" ]]; then
+  source "$HOME/.$HOSTNAME.bash"
+fi
 
-# function for going back to root of git repo
-function git_root {
-  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    cd $(git rev-parse --show-toplevel)
-  else
-    >&2 echo "Error, not inside a git repository"
-    false
-  fi
-}
+# Paths
+# For golang
+GOPATH=$HOME/go
+PATH=$HOME/go/bin:$PATH
 
-alias cdgr="git_root"
+# For rustup
+PATH=$HOME/.cargo/bin:$PATH
+
+# Always use user-defined programs before system-defined ones
+PATH=$HOME/bin:$PATH
+
+# For rbenv
+PATH=$HOME/.rbenv/bin:$PATH
+
+export PATH
+
+# Prompt
+export PS1="[\u@\h \W]\$ "
+
+# Set editor and less flags
+export EDITOR=vim
+export LESS='-F -g -i -M -S -w -X -z-4'
 
 # Alias neovim if we have it
 if hash "nvim"; then
@@ -26,7 +37,7 @@ else
   alias vi="vim"
 fi
 
-# Mac aliases for ls
+# System specific ls aliases
 if [[ "$OSTYPE" == darwin* ]]; then
   alias ls="ls -lhFG"
   alias la="ls -alhGF"
@@ -35,12 +46,7 @@ else
   alias la="ls -alhF --color=auto"
 fi
 
-alias quit="exit"
-
 # key bindings
 stty werase undef
 bind '\C-f:forward-search-history'
 bind '\C-w:backward-kill-word'
-
-# Prompt
-export PS1="[\u@\h \W]\$ "
