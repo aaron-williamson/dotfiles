@@ -27,7 +27,7 @@ export PS1="[\u@\h \W]\$ "
 
 # Set editor and less flags
 export EDITOR=vim
-export LESS='-F -g -i -M -S -w -X -z-4'
+export LESS='-F -g -i -R -M -S -w -X -z-4'
 
 # Alias neovim if we have it
 if hash "nvim"; then
