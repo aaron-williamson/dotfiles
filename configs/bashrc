@@ -8,7 +8,6 @@ fi
 
 # Paths
 # For golang
-GOPATH=$HOME/go
 PATH=$HOME/go/bin:$PATH
 
 # For rustup
