@@ -1,6 +1,6 @@
 [submodule "prezto"]
 	path = configs/prezto
-	url = git@github.com:aaron-williamson/prezto
+	url = git@github.com:aaron-williamson/my-prezto
 [submodule "vim"]
 	path = configs/vim
 	url = git@github.com:aaron-williamson/vimdir
