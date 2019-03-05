@@ -22,7 +22,7 @@
 	ds = diff --submodule=short
 	dt = difftool
 	dw = diff -w
-	lg = log --graph --pretty=format:'%C(bold red)%h%Creset -%C(<%= config[:decorate_color] %>)%d%Creset %s %C(green)(%ar)%Creset %C(bold blue)<%%an>%Creset'
+	lg = log --graph --date="human" --pretty=format:'%C(bold red)%h%Creset -%C(<%= config[:decorate_color] %>)%d%Creset %s %C(green)(%ad)%Creset %C(bold blue)<%%an>%Creset'
 	lgp = !git lg -p
 	lgpw = !git lg -p -w
 	st = status
@@ -46,6 +46,8 @@
 	lbr = branch -r --list
 	lba = branch -a
 	bv = branch -vv
+	ba = branch -vv -a
+	br = branch -vv -r
 	sm = submodule
 	rv = remote -v
 [status]
