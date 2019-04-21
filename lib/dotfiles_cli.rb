@@ -1,7 +1,7 @@
 require 'thor'
 
 # Require each dotfile specification
-DOTFILE_COMMAND_FILES = Dir.glob(File.expand_path('../dotfile_commands/*', __FILE__))
+DOTFILE_COMMAND_FILES = Dir.glob(File.expand_path('dotfile_commands/*', __dir__))
 DOTFILE_COMMAND_FILES.each do |file|
   require file.gsub(/\.rb$/, '')
 end
