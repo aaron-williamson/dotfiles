@@ -1,5 +1,5 @@
 [diff]
-	tool = vimdiff
+	tool = <%= config[:difftool] %>
 <% if config[:submodule] -%>
 	submodule = <%= config[:submodule] %>
 <% end -%>
@@ -8,11 +8,15 @@
 <% end -%>
 [difftool]
 	prompt = false
+[difftool "vscode"]
+	cmd = code --wait --diff $LOCAL $REMOTE
 [merge]
-	tool = vimdiff
+	tool = <%= config[:mergetool] %>
 	conflictStyle = diff3
 [mergetool]
 	prompt = false
+[mergetool "vscode"]
+	cmd = code --wait $MERGED
 [user]
 	email = <%= config[:email] %>
 	name = <%= config[:user] %>
