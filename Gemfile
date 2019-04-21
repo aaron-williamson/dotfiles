@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'thor'
-gem 'git'
+gem 'thor', '~>0'
+gem 'git', '~>1'
 
 group :development do
   gem 'rubocop'
