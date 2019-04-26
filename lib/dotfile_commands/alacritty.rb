@@ -7,7 +7,7 @@ module DotfilesCli
 
       def setup(*_args)
         config = config_home
-        create_link File.join(config, 'alacritty', 'alacritty.yml'), File.join(options[:configs], 'alacritty.yaml')
+        create_link File.join(config, 'alacritty', 'alacritty.yml'), File.join(options[:configs], 'alacritty.yml')
       end
     end
   end
