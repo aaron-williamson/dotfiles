@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<!-- My restic backup job for MacOS -->
+<dict>
+    <key>Label</key>
+    <string>backup.restic</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/restic</string>
+        <string>--repo</string>
+        <string>rest:https://restic.dummy.thicc</string>
+        <string>--password-file</string>
+        <string>/Users/aaron/.restic_pass</string>
+        <string>backup</string>
+        <string>--exclude</string>
+        <string>/Users/aaron/Documents/images</string>
+        <string>--exclude</string>
+        <string>/Users/aaron/go/pkg</string>
+        <string>--exclude</string>
+        <string>/Users/aaron/go/bin</string>
+        <string>/Users/aaron/.ssh</string>
+        <string>/Users/aaron/go</string>
+        <string>/Users/aaron/Documents</string>
+        <string>/Users/aaron/gitrepos</string>
+        <string>/Users/aaron/Dropbox</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict>
+            <key>Hour</key>
+            <integer>3</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>12</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>18</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+    </array>
+</dict>
+</plist>
