@@ -9,7 +9,7 @@
     <array>
         <string>/usr/local/bin/restic</string>
         <string>--repo</string>
-        <string>rest:https://restic.dummy.thicc</string>
+        <string>rest:https://restic.aarowill.ca</string>
         <string>--password-file</string>
         <string>/Users/aaron/.restic_pass</string>
         <string>backup</string>
