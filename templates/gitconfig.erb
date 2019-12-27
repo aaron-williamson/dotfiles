@@ -27,6 +27,7 @@
 	dt = difftool
 	dw = diff -w
 	lg = log --graph --date="human" --pretty=format:'%C(bold red)%h%Creset -%C(<%= config[:decorate_color] %>)%d%Creset %s %C(green)(%ad)%Creset %C(bold blue)<%%an>%Creset'
+	l = log --date="human" --pretty=format:'%C(bold red)%h%Creset -%C(<%= config[:decorate_color] %>)%d%Creset %s %C(green)(%ad)%Creset %C(bold blue)<%%an>%Creset'
 	lgp = !git lg -p
 	lgpw = !git lg -p -w
 	st = status
