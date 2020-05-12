@@ -15,7 +15,7 @@ module DotfilesCli
     # rubocop:enable LineLength
 
     desc 'all', 'run all dotfile configurations'
-    method_option :exclude, aliases: '-e', default: [], desc: 'A list of configurations to exclude from this run'
+    method_option :exclude, aliases: '-e', type: :array, default: [], desc: 'A list of configurations to exclude from this run'
 
     def all(*_args)
       Dotfiles.subcommands.reject { |sc| options[:exclude].include?(sc) }.each do |cmd|
