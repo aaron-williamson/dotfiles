@@ -17,6 +17,8 @@
 	prompt = false
 [mergetool "vscode"]
 	cmd = code --wait $MERGED
+[pull]
+	ff = only
 [user]
 	email = <%= config[:email] %>
 	name = <%= config[:user] %>
