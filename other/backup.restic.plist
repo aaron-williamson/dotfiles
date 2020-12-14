@@ -2,12 +2,20 @@
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <!-- My restic backup job for MacOS -->
+<!-- Place this file in ~/Library/LaunchAgents/backup.restic.plist -->
+<!-- Load it with `launchctl load ~/Library/LaunchAgents/backup.restic.plist` -->
+<!-- It is scheduled to run at 0300, 1200, and 1800 every day; run it manually with `launchctl start backup.restic` -->
+<!-- Logs for this job can be found in /tmp/backup.restic.stdout and /tmp/backup.restic.stderr -->
 <dict>
     <key>Label</key>
     <string>backup.restic</string>
+    <key>StandardOutPath</key>
+    <string>/tmp/backup.restic.stdout</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/backup.restic.stderr</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/usr/local/bin/restic</string>
+        <string>/opt/local/bin/restic</string>
         <string>--repo</string>
         <string>rest:https://restic.aarowill.ca</string>
         <string>--password-file</string>
@@ -22,6 +30,7 @@
         <string>/Users/aaron/.ssh</string>
         <string>/Users/aaron/go</string>
         <string>/Users/aaron/Documents</string>
+        <string>/Users/aaron/Pictures</string>
         <string>/Users/aaron/gitrepos</string>
         <string>/Users/aaron/Dropbox</string>
     </array>
